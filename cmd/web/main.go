@@ -5,30 +5,6 @@ import (
 	"net/http"
 )
 
-// Define a home handler function which writes a byte slice containing
-// "Hello from Snippetbox" as the response body.
-func home(w http.ResponseWriter, r *http.Request) {
-
-	// Check if the current request URL path exactly matches "/" . If it doesn't, use
-	// the http.NotFound() function to send a 404 response to the client.
-	if r.URL.Path != "/" {
-		http.NotFound(w, r)
-		return
-	}
-
-	w.Write([]byte("Hello from snippetbox"))
-}
-
-// snippetview handler function
-func snippetView(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Display a specific snippet..."))
-}
-
-// createSnippet handler function
-func snippetCreate(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Create a new snippet"))
-}
-
 func main() {
 
 	// the http.NewServeMux() function to initialize a new servemux, then
