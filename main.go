@@ -11,12 +11,27 @@ func home(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hello from snippetbox"))
 }
 
+// snippetview handler function
+func snippetView(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Display a specific snippet..."))
+}
+
+// createSnippet handler function
+func snippetCreate(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Create a new snippet"))
+}
+
 func main() {
 
 	// the http.NewServeMux() function to initialize a new servemux, then
 	mux := http.NewServeMux()
+
 	// register the home function as the handler for the "/" URL pattern.
 	mux.HandleFunc("/", home)
+
+	// Register the handler function with corresponding URL pattern
+	mux.HandleFunc("/snippet/view", snippetView)
+	mux.HandleFunc("/snippet/create", snippetCreate)
 
 	//port for the web server to listen to
 	port := ":4000"
