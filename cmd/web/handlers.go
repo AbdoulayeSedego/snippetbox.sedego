@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
+	"text/template"
 )
 
 // Define a home handler function which writes a byte slice containing
@@ -16,8 +18,28 @@ func home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
+	//w.Write([]byte("Hello from snippetbox"))
 
-	w.Write([]byte("Hello from snippetbox"))
+	//the template.ParseFiles() function  read the template file into a
+	// template set. If there's an error, we log the detailed error message and use
+	// the http.Error() function to send a generic 500 Internal Server Error
+	// response to the user.
+	ts, err := template.ParseFiles("./ui/html/pages/home.html")
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
+
+	// Execute() method on the template set to write the
+	// template content as the response body. The last parameter to Execute()
+	// represents any dynamic data that pass in, which for now we'll
+	// leave as nil.
+	err = ts.Execute(w, nil)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+	}
 }
 
 // snippetview handler function
