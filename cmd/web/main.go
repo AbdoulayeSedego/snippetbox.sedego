@@ -10,6 +10,13 @@ func main() {
 	// the http.NewServeMux() function to initialize a new servemux, then
 	mux := http.NewServeMux()
 
+	//File server which serves files out of the ./ui/static/ directory.
+	fileServer := http.FileServer(http.Dir("./ui/static/"))
+
+	//register the file server to handle all URL path that start with "/static/",
+	//then strip the "/static" prefix before the request reaches the file server
+	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
+
 	// register the home function as the handler for the "/" URL pattern.
 	mux.HandleFunc("/", home)
 
